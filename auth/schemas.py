@@ -3,6 +3,7 @@ from typing import Optional
 from fastapi_users import schemas
 
 
+# возвращаемая информация о пользователе
 class UserRead(schemas.BaseUser[int]):
     id: int
     email: str
@@ -13,6 +14,7 @@ class UserRead(schemas.BaseUser[int]):
     is_verified: bool = False
 
 
+# информация, принимаемая при создании пользователя
 class UserCreate(schemas.BaseUserCreate):
     username: str
     email: str

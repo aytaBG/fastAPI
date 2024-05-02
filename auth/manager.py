@@ -1,7 +1,7 @@
-import uuid
 from typing import Optional
 
 from fastapi import Depends, Request
+from fastapi.openapi.models import Response
 from fastapi_users import BaseUserManager, IntegerIDMixin, schemas, models, exceptions
 
 from auth.database import User, get_user_db
@@ -10,13 +10,25 @@ from config import SECRETM as SECRET
 from sqlalchemy import Integer
 
 
+# Менеджер пользователей
 class UserManager(IntegerIDMixin, BaseUserManager[User, Integer]):
     reset_password_token_secret = SECRET
     verification_token_secret = SECRET
 
+    # действие после регистрации
     async def on_after_register(self, user: User, request: Optional[Request] = None):
         print(f"User {user.id} has registered.")
 
+    async def on_after_login(
+        self,
+        user: User,
+        request: Optional[Request] = None,
+        response: Optional[Response] = None,
+    ):
+
+        print(f"User {user.username} has logged in.")
+
+    # создание пользователя в бд, вынесено из библиотеки что бы добавить роль по умолчанию
     async def create(
         self,
         user_create: schemas.UC,
@@ -37,6 +49,7 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, Integer]):
         )
         password = user_dict.pop("password")
         user_dict["hashed_password"] = self.password_helper.hash(password)
+        # задаём роль по умолчанию
         user_dict['role_id'] = 1
 
         created_user = await self.user_db.create(user_dict)

@@ -1,8 +1,10 @@
 from dotenv import load_dotenv
 import os
 
+# забор данных из файла .env
 load_dotenv()
 
+# получаем переменные из .env
 DB_HOST = os.environ.get('DB_HOST')
 DB_PORT = os.environ.get('DB_PORT')
 DB_NAME = os.environ.get('DB_NAME')

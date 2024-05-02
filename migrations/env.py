@@ -12,6 +12,7 @@ from models.models import metadata
 # access to the values within the .ini file in use.
 config = context.config
 
+# переменные для alembic.ini
 section = config.config_ini_section
 config.set_section_option(section, 'DB_HOST', DB_HOST)
 config.set_section_option(section, 'DB_NAME', DB_NAME)
@@ -28,6 +29,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
+# метадата из models.py
 target_metadata = metadata
 
 # other values from the config, defined by the needs of env.py,
