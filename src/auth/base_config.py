@@ -1,6 +1,10 @@
+from fastapi_users import FastAPIUsers
 from fastapi_users.authentication import CookieTransport, AuthenticationBackend
 from fastapi_users.authentication import JWTStrategy
-from config import SECRETA as SECRET
+from src.auth.manager import get_user_manager
+from src.auth.models import User
+
+from src.config import SECRETA as SECRET
 
 
 # стратегия валидации и хранения аутентификации
@@ -19,3 +23,13 @@ auth_backend = AuthenticationBackend(
     get_strategy=get_jwt_strategy,
 )
 
+
+# создаём объект для работы с роутерами
+fastapi_users = FastAPIUsers[User, int](
+    get_user_manager,
+    [auth_backend],
+)
+
+
+# переменная с текщим пользователем
+current_user = fastapi_users.current_user()

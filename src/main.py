@@ -1,22 +1,13 @@
-from auth.auth import auth_backend
-from auth.database import User
-from auth.manager import get_user_manager
-from auth.schemas import UserRead, UserCreate
+from src.auth.base_config import auth_backend, fastapi_users, current_user
+from src.auth.models import User
+from src.auth.schemas import UserRead, UserCreate
 
 from fastapi import FastAPI, Depends
-from fastapi_users import FastAPIUsers
 
 
 # создаём объект приложения
 app = FastAPI(
     title='Trading App'
-)
-
-
-# создаём объект для работы с роутерами
-fastapi_users = FastAPIUsers[User, int](
-    get_user_manager,
-    [auth_backend],
 )
 
 
@@ -34,10 +25,6 @@ app.include_router(
     prefix="/auth",
     tags=["auth"],
 )
-
-
-# переменная с текщим пользователем
-current_user = fastapi_users.current_user()
 
 
 # роутер, доступный для залогиненных пользователей

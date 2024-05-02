@@ -4,9 +4,10 @@ from fastapi import Depends, Request
 from fastapi.openapi.models import Response
 from fastapi_users import BaseUserManager, IntegerIDMixin, schemas, models, exceptions
 
-from auth.database import User, get_user_db
+from src.auth.models import User
+from src.auth.utils import get_user_db
+from src.config import SECRETM as SECRET
 
-from config import SECRETM as SECRET
 from sqlalchemy import Integer
 
 
