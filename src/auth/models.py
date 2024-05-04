@@ -25,6 +25,7 @@ role = Table(
     Column('permissions', JSON)
 )
 
+
 # таблица пользователей
 user = Table(
     # название
