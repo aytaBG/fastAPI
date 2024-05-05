@@ -11,6 +11,7 @@ from src.auth.base_config import auth_backend, fastapi_users, current_user
 from src.auth.models import User
 from src.auth.schemas import UserRead, UserCreate
 from src.operations.router import router as router_operation
+from src.tasks.router import router as router_task
 
 from fastapi import FastAPI, Depends
 
@@ -48,6 +49,8 @@ app.include_router(
 
 
 app.include_router(router_operation)
+
+app.include_router(router_task)
 
 
 @app.on_event("startup")
