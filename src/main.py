@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 import uvicorn
 
 from starlette.requests import Request
@@ -53,8 +55,8 @@ app.include_router(router_operation)
 app.include_router(router_task)
 
 
-@app.on_event("startup")
-async def startup():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     redis = aioredis.from_url("redis://localhost")
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
 

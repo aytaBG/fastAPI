@@ -1,23 +1,19 @@
 import datetime
 
-from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, MetaData
+from sqlalchemy import Column, Integer, String, TIMESTAMP
 
+from src import Base
 
-# переменная для создания миграций alembic
-metadata = MetaData()
 
 # таблица операций для бд
-operation = Table(
+class OperationModel(Base):
     # название
-    'operation',
-    # сохранение добавленной информации для миграции
-    metadata,
+    __tablename__ = 'operation'
     # столбцы
     # номер операции, дополняется автоматически
-    Column('id', Integer, primary_key=True),
-    Column('quantity', String),
-    Column('figi', String),
-    Column('instrument_type', String, nullable=False),
-    Column('date', TIMESTAMP(timezone=True)),
-    Column('type', String),
-)
+    id = Column(Integer, primary_key=True)
+    quantity = Column(String)
+    figi = Column(String)
+    instrument_type = Column(String, nullable=False)
+    date = Column(TIMESTAMP(timezone=True))
+    type = Column(String)

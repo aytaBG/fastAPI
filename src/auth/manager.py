@@ -18,7 +18,7 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, Integer]):
 
     # действие после регистрации
     async def on_after_register(self, user: User, request: Optional[Request] = None):
-        print(f"User {user.id} has registered.")
+        print(f"User {user.id}.{user.username} has registered.")
 
     async def on_after_login(
         self,
