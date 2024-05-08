@@ -5,17 +5,18 @@ import uvicorn
 from starlette.requests import Request
 from starlette.responses import Response
 
+from fastapi import FastAPI, Depends
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from fastapi_cache.decorator import cache
+from fastapi.staticfiles import StaticFiles
 
 from src.auth.base_config import auth_backend, fastapi_users, current_user
 from src.auth.models import User
 from src.auth.schemas import UserRead, UserCreate
 from src.operations.router import router as router_operation
 from src.tasks.router import router as router_task
-
-from fastapi import FastAPI, Depends
+from src.pages.router import router as router_pages
 
 from redis import asyncio as aioredis
 
@@ -32,6 +33,9 @@ if __name__ == '__main__':
 app = FastAPI(
     title='Trading App'
 )
+
+
+app.mount("/static", StaticFiles(directory="src/static"), name="static")
 
 
 # роутер для аутентификации
@@ -53,6 +57,8 @@ app.include_router(
 app.include_router(router_operation)
 
 app.include_router(router_task)
+
+app.include_router(router_pages)
 
 
 @asynccontextmanager
