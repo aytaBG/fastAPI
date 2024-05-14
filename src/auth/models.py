@@ -22,6 +22,8 @@ class RoleModel(Base):
 
 # модель пользователя
 class User(SQLAlchemyBaseUserTable[int], Base):
+    # название
+    __tablename__ = 'user'
     # номер пользователя, дополняется автоматически
     id: Mapped[int] = mapped_column(
         Integer, primary_key=True

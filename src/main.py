@@ -17,6 +17,8 @@ from src.auth.schemas import UserRead, UserCreate
 from src.operations.router import router as router_operation
 from src.tasks.router import router as router_task
 from src.pages.router import router as router_pages
+from src.chat.router import router as router_chat
+from src.config import REDIS_HOST, REDIS_PORT
 
 from redis import asyncio as aioredis
 
@@ -60,10 +62,12 @@ app.include_router(router_task)
 
 app.include_router(router_pages)
 
+app.include_router(router_chat)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    redis = aioredis.from_url("redis://localhost")
+    redis = aioredis.from_url(f"redis://{REDIS_HOST}:{REDIS_PORT}")
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
 
 

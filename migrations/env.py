@@ -11,6 +11,7 @@ import sys
 from src.config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
 from src.auth.models import RoleModel, User
 from src.operations.models import OperationModel
+from src.chat.models import Messages
 
 from src import Base
 
